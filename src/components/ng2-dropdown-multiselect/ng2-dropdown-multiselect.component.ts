@@ -1,14 +1,14 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
-import { IDropdownOption } from './interfaces/dropdown-option.interface';
-import { IMultiselectOptions } from './interfaces/multiselect-options.interface';
+import { IDropdownOption } from '../../interfaces/dropdown-option.interface';
+import { IMultiselectOptions } from '../../interfaces/multiselect-options.interface';
 
-import { MultiselectConfig } from './models/multiselect-config.model';
+import { MultiselectConfig } from '../../models/multiselect-config.model';
 
 @Component({
     selector: 'ng2-dropdown-multiselect',
-    templateUrl: 'dropdown-multiselect.component.html',
-    styleUrls: ['dropdown-multiselect.component.css']
+    templateUrl: 'ng2-dropdown-multiselect.component.html',
+    styleUrls: ['ng2-dropdown-multiselect.component.css']
 })
 export class DropdownMultiselectComponent implements OnInit {
 
@@ -72,7 +72,7 @@ export class DropdownMultiselectComponent implements OnInit {
         }
       });
 
-      this.config.buttonLabel = value.slice(0, value.length - 2);
+      this.config.buttonLabel = value.slice(0, value.length - 2); // Remove trailing ', '
     } else {
       this.config.buttonLabel = this.opts.defaultButtonText;
     }

@@ -1,0 +1,28 @@
+{
+  "name": "ng2-dropdown-multiselect",
+  "version": "0.1.0",
+  "description": "Simple multiselect dropdown plugin for Angular 2",
+  "main": "dropdown-multiselect.module.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "multiselect",
+    "dropdown",
+    "multi",
+    "select",
+    "form",
+    "input"
+  ],
+  "author": "Andy Mepham",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/common": "^2.0.0-rc.5",
+    "@angular/compiler": "^2.0.0-rc.5",
+    "@angular/core": "^2.0.0-rc.5",
+    "@angular/forms": "^0.3.0",
+    "ng2-bootstrap": "^1.0.24",
+    "rxjs": "^5.0.0-beta.6",
+    "zone.js": "^0.6.6"
+  }
+}

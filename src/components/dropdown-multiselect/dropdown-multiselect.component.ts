@@ -6,9 +6,9 @@ import { IMultiselectOptions } from '../../interfaces/multiselect-options.interf
 import { MultiselectConfig } from '../../models/multiselect-config.model';
 
 @Component({
-    selector: 'ng2-dropdown-multiselect',
-    templateUrl: 'ng2-dropdown-multiselect.component.html',
-    styleUrls: ['ng2-dropdown-multiselect.component.css']
+    selector: 'dropdown-multiselect',
+    templateUrl: 'dropdown-multiselect.component.html',
+    styleUrls: ['dropdown-multiselect.component.css']
 })
 export class DropdownMultiselectComponent implements OnInit {
 

@@ -1,1 +1,1 @@
-export * from './ng2-dropdown-multiselect';
+export * from './dropdown-multiselect';

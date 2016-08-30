@@ -1,12 +1,16 @@
 {
   "name": "ng2-dropdown-multiselect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple multiselect dropdown plugin for Angular 2",
   "main": "lib/index.js",
   "scripts": {
     "tsc": "tsc --p src",
     "tsc:w": "tsc -w --p src",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "url": "https://github.com/AndyMeps/ng2-dropdown-multiselect.git",
+    "type": "git"
   },
   "keywords": [
     "multiselect",

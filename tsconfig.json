@@ -7,11 +7,11 @@
         "sourceMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "outDir": "../lib",
+        "outDir": "lib",
         "declaration": true,
         "removeComments": true
     },
-    "exclude": [
-        "node_modules"
+    "files": [
+        "index.ts"
     ]
 }

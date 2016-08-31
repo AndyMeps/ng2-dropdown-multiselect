@@ -7,8 +7,29 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 
 @Component({
     selector: 'dropdown-multiselect',
-    templateUrl: 'dropdown-multiselect.component.html',
-    styleUrls: ['dropdown-multiselect.component.css']
+    templateUrl: `<div class="multiselect-container" dropdown autoClose="outsideClick">
+                    <button class="btn btn-default" dropdownToggle>
+                        <span>{{config.buttonLabel}}</span> ({{selectedLength}})
+                        <span class="caret"></span>
+                    </button>
+                    <ul dropdownMenu class="dropdown-menu">
+                        <li *ngIf="config.showCheckAll" class="top-section" [ngClass]="{'with-border': !config.showUncheckAll }">
+                            <a class="dropdown-item" (click)="checkAll()"><i class="fa fa-check"></i> Check All</a>
+                        </li>
+                        <li *ngIf="config.showUncheckAll" class="top-section with-border">
+                            <a class="dropdown-item" (click)="uncheckAll()"><i class="fa fa-times"></i> Uncheck All</a>
+                        </li>
+                        <li *ngFor="let row of model"  role="menuitem">
+                            <a class="dropdown-item" (click)="toggleRow(row)"><i *ngIf="row.selected" class="fa fa-check"></i> {{row.label}}</a>
+                        </li>
+                    </ul>
+                </div>`,
+    styles: [`.multiselect-container {
+                display: inline-block; }`,
+             `.top-section.with-border {
+                border-bottom: 1px solid #ccc; }`,
+             `.with-border > .dropdown-item {
+                margin-bottom: 4px; }`]
 })
 export class DropdownMultiselectComponent implements OnInit {
 

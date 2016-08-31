@@ -8,7 +8,7 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 @Component({
     selector: 'dropdown-multiselect',
     template: `<div class="multiselect-container" dropdown autoClose="outsideClick">
-                    <button class="btn btn-default" dropdownToggle>
+                    <button [ngClass]="config.buttonClasses" dropdownToggle>
                         <span>{{config.buttonLabel}}</span> ({{selectedLength}})
                         <span class="caret"></span>
                     </button>
@@ -125,6 +125,11 @@ export class DropdownMultiselectComponent implements OnInit {
     // maxInline
     if (this.opts.maxInline) {
       this.config.maxInline = this.opts.maxInline;
+    }
+
+    // buttonClasses
+    if (this.opts.buttonClasses) {
+      this.config.buttonClasses = this.opts.buttonClasses;
     }
   }
 

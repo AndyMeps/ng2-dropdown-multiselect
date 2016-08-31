@@ -6,6 +6,7 @@ export class MultiselectConfig implements IMultiselectOptions {
   public maxInline: number;
   public showCheckAll: boolean;
   public showUncheckAll: boolean;
+  public buttonClasses: string[];
 
   constructor() {
     this.buttonLabel = 'Selected';
@@ -13,5 +14,6 @@ export class MultiselectConfig implements IMultiselectOptions {
     this.maxInline = 3;
     this.showCheckAll = false;
     this.showUncheckAll = false;
+    this.buttonClasses = ['btn', 'btn-default'];
   }
 }

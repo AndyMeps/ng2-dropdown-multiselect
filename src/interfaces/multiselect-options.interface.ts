@@ -4,4 +4,5 @@ export interface IMultiselectOptions {
   maxInline?: number;
   showCheckAll?: boolean;
   showUncheckAll?: boolean;
+  buttonClasses?: string[];
 }

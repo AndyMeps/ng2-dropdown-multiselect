@@ -20,16 +20,30 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
                             <a class="dropdown-item" (click)="uncheckAll()"><i class="fa fa-times"></i> Uncheck All</a>
                         </li>
                         <li *ngFor="let row of model"  role="menuitem">
-                            <a class="dropdown-item" (click)="toggleRow(row)"><i *ngIf="row.selected" class="fa fa-check"></i> {{row.label}}</a>
+                            <a class="dropdown-item" (click)="toggleRow(row)">
+                              <i *ngIf="row.selected" class="fa fa-check"></i>
+                              <span *ngIf="row.color" class="row-color" [style.background-color]="row.color"></span> {{row.label}}
+                            </a>
                         </li>
                     </ul>
                 </div>`,
     styles: [`.multiselect-container {
                 display: inline-block; }`,
+
              `.top-section.with-border {
                 border-bottom: 1px solid #ccc; }`,
+
              `.with-border > .dropdown-item {
-                margin-bottom: 4px; }`]
+                margin-bottom: 4px; }`,
+
+             `.row-color {
+                width: 15px;
+                height: 15px;
+                display: inline-block;
+                position: relative;
+                top: 3px;
+                margin-right: 5px;
+                border-radius: 3px; }`]
 })
 export class DropdownMultiselectComponent implements OnInit {
 

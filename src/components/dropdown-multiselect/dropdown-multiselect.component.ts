@@ -7,7 +7,7 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 
 @Component({
     selector: 'dropdown-multiselect',
-    templateUrl: `<div class="multiselect-container" dropdown autoClose="outsideClick">
+    template: `<div class="multiselect-container" dropdown autoClose="outsideClick">
                     <button class="btn btn-default" dropdownToggle>
                         <span>{{config.buttonLabel}}</span> ({{selectedLength}})
                         <span class="caret"></span>

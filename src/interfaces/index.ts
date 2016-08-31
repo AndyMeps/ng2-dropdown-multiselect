@@ -1,2 +1,2 @@
-export * from './dropdown-option.interface';
+export * from './dropdown-item.interface';
 export * from './multiselect-options.interface';

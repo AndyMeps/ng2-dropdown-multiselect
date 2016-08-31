@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
-import { IDropdownOption } from '../../interfaces/dropdown-option.interface';
+import { IDropdownItem } from '../../interfaces/dropdown-item.interface';
 import { IMultiselectOptions } from '../../interfaces/multiselect-options.interface';
 
 import { MultiselectConfig } from '../../models/multiselect-config.model';
@@ -48,7 +48,7 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 export class DropdownMultiselectComponent implements OnInit {
 
   @Input('dropdown-options') opts: IMultiselectOptions;
-  @Input('dropdown-model') model: IDropdownOption[];
+  @Input('dropdown-model') model: IDropdownItem[];
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
@@ -79,7 +79,7 @@ export class DropdownMultiselectComponent implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------
-  public toggleRow = (row: IDropdownOption) => {
+  public toggleRow = (row: IDropdownItem) => {
     row.selected = !row.selected;
 
     this._getSelectedLength();

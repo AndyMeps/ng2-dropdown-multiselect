@@ -1,32 +1,52 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
 import { IDropdownItem } from '../../interfaces/dropdown-item.interface';
-import { IMultiselectOptions } from '../../interfaces/multiselect-options.interface';
+import { IMultiselectConfig } from '../../interfaces/multiselect-config.interface';
 
 import { MultiselectConfig } from '../../models/multiselect-config.model';
 
+/**
+ * Dropdown Multiselect component to be used by components.
+ * 
+ * Input: dropdown-config - configuration.
+ * Input: dropdown-model - dropdown options model.
+ * 
+ * @export
+ * @class DropdownMultiselectComponent
+ * @implements {OnInit}
+ */
 @Component({
     selector: 'dropdown-multiselect',
     template: `<div class="multiselect-container" dropdown autoClose="outsideClick">
-                    <button [ngClass]="config.buttonClasses" dropdownToggle>
-                        <span>{{config.buttonLabel}}</span> ({{selectedLength}})
-                        <span class="caret"></span>
-                    </button>
-                    <ul dropdownMenu class="dropdown-menu">
-                        <li *ngIf="config.showCheckAll" class="top-section" [ngClass]="{'with-border': !config.showUncheckAll }">
-                            <a class="dropdown-item" (click)="checkAll()"><i class="fa fa-check"></i> Check All</a>
-                        </li>
-                        <li *ngIf="config.showUncheckAll" class="top-section with-border">
-                            <a class="dropdown-item" (click)="uncheckAll()"><i class="fa fa-times"></i> Uncheck All</a>
-                        </li>
-                        <li *ngFor="let row of model"  role="menuitem">
-                            <a class="dropdown-item" (click)="toggleRow(row)">
-                              <i *ngIf="row.selected" class="fa fa-check"></i>
-                              <span *ngIf="row.color" class="row-color" [style.background-color]="row.color"></span> {{row.label}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>`,
+                <button [ngClass]="config.buttonClasses" dropdownToggle>
+                    <span>{{config.buttonLabel}}</span> ({{selectedLength}})
+                    <span class="caret"></span>
+                </button>
+                <ul dropdownMenu class="dropdown-menu">
+                    <li *ngIf="config.showCheckAll" [ngClass]="{'with-border': !config.showUncheckAll }" class="top-section">
+                        <a class="dropdown-item" (click)="checkAll()">
+                            <i *ngIf="config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
+                            <input *ngIf="config.checkClasses.length === 0" type="checkbox" name="check-all" checked="checked" readonly />
+                            <span> Check All</span>
+                        </a>
+                    </li>
+                    <li *ngIf="config.showUncheckAll" class="top-section with-border">
+                        <a (click)="uncheckAll()" class="dropdown-item">
+                            <i *ngIf="config.uncheckClasses.length > 0" [ngClass]="config.uncheckClasses"></i>
+                            <input *ngIf="config.uncheckClasses.length === 0" type="checkbox" name="uncheck-all" readonly />
+                            <span> Uncheck All</span>
+                        </a>
+                    </li>
+                    <li *ngFor="let row of model" role="menuitem">
+                        <a class="dropdown-item" (click)="toggleRow(row)">
+                            <i *ngIf="row.selected && config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
+                            <input *ngIf="config.checkClasses.length === 0" [name]="row.id + '-checkbox'" [(ngModel)]="row.selected" type="checkbox" />
+                            <span *ngIf="row.color" [style.background-color]="row.color" class="row-color"></span> 
+                            <span>{{row.label}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>`,
     styles: [`.multiselect-container {
                 display: inline-block; }`,
 
@@ -47,23 +67,55 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 })
 export class DropdownMultiselectComponent implements OnInit {
 
-  @Input('dropdown-options') opts: IMultiselectOptions;
+  /**
+   * Configuration object to show bespoke version of component.
+   * 
+   * @type {IMultiselectConfig}
+   */
+  @Input('dropdown-config') opts: IMultiselectConfig;
+  /**
+   * Dropdown options to be rendered.
+   * 
+   * @type {IDropdownItem[]}
+   */
   @Input('dropdown-model') model: IDropdownItem[];
 
+  /**
+   * Hook for components to capture changes in selections.
+   * 
+   * @type {EventEmitter<any>}
+   */
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   // -------------------------------------------------------------------------------------------------
+  /**
+   * Configuration object used by the template.
+   * 
+   * @type {MultiselectConfig}
+   */
   public config: MultiselectConfig;
 
+  /**
+   * Number of options selected.
+   * 
+   * @type {number}
+   */
   public selectedLength: number;
 
   // -------------------------------------------------------------------------------------------------
+  /**
+   * Creates an instance of DropdownMultiselectComponent.
+   * 
+   */
   constructor() {
     this.config = new MultiselectConfig();
     this.selectedLength = 0;
   }
 
   // -------------------------------------------------------------------------------------------------
+  /**
+   * Angular lifecycle hook, executed after constructor
+   */
   ngOnInit() {
 
     this._processOptions();
@@ -79,6 +131,9 @@ export class DropdownMultiselectComponent implements OnInit {
   }
 
   // -------------------------------------------------------------------------------------------------
+  /**
+   * Select / deselect dropdown option.
+   */
   public toggleRow = (row: IDropdownItem) => {
     row.selected = !row.selected;
 
@@ -86,15 +141,26 @@ export class DropdownMultiselectComponent implements OnInit {
     this._onChange();
   }
 
+  /**
+   * Deselect all dropdown options.
+   */
   public uncheckAll = () => {
     this._setSelectedTo(false);
   }
 
+  /**
+   * Select all dropdown options.
+   */
   public checkAll = () => {
     this._setSelectedTo(true);
   }
 
   // -------------------------------------------------------------------------------------------------
+  /**
+   * Determine the selected number of options.
+   * 
+   * @private
+   */
   private _getSelectedLength = () => {
     this.selectedLength = this.model.filter((row) => { return row.selected }).length;
 
@@ -113,6 +179,11 @@ export class DropdownMultiselectComponent implements OnInit {
     }
   }
 
+  /**
+   * Determine how the dropdown should be configured.
+   * 
+   * @private
+   */
   private _processOptions = () => {
     // defaultButtonText
     if (this.opts.defaultButtonText) {
@@ -145,8 +216,25 @@ export class DropdownMultiselectComponent implements OnInit {
     if (this.opts.buttonClasses) {
       this.config.buttonClasses = this.opts.buttonClasses;
     }
+
+    // checkClasses
+    if (this.opts.checkClasses) {
+      this.config.checkClasses = this.opts.checkClasses;
+    }
+
+    // uncheckClasses
+    if (this.opts.uncheckClasses) {
+      this.config.uncheckClasses = this.opts.uncheckClasses;
+    }
   }
 
+  /**
+   * Update all options in the model to either:
+   * - selected (provide val = true)
+   * - deselected (provide val = false)
+   * 
+   * @private
+   */
   private _setSelectedTo = (val: boolean) => {
     this.model.forEach((row) => {
       row.selected = val;
@@ -157,6 +245,11 @@ export class DropdownMultiselectComponent implements OnInit {
     this._onChange();
   }
 
+  /**
+   * emit onchange event with the model options that are selected.
+   * 
+   * @private
+   */
   private _onChange = () => {
     this.onChange.emit(this.model.filter((row) => { return row.selected }));
   }

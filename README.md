@@ -1,5 +1,7 @@
 # ng2-dropdown-multiselect
 
+![travis-ci](https://travis-ci.org/AndyMeps/ng2-dropdown-multiselect.svg?branch=master)
+
 Simple multiselect dropdown plugin for Angular 2.
 
 # This module is still a WIP and this documentation may be ahead of or behind the codebase.

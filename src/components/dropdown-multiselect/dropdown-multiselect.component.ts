@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChange } from '@angular/core';
 
 import { IDropdownItem } from '../../interfaces/dropdown-item.interface';
 import { IMultiselectConfig } from '../../interfaces/multiselect-config.interface';
@@ -7,10 +7,10 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
 
 /**
  * Dropdown Multiselect component to be used by components.
- * 
+ *
  * Input: dropdown-config - configuration.
  * Input: dropdown-model - dropdown options model.
- * 
+ *
  * @export
  * @class DropdownMultiselectComponent
  * @implements {OnInit}
@@ -41,7 +41,7 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
                         <a class="dropdown-item" (click)="toggleRow(row)">
                             <i *ngIf="row.selected && config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
                             <input *ngIf="config.checkClasses.length === 0" [name]="row.id + '-checkbox'" [(ngModel)]="row.selected" type="checkbox" />
-                            <span *ngIf="row.color" [style.background-color]="row.color" class="row-color"></span> 
+                            <span *ngIf="row.color" [style.background-color]="row.color" class="row-color"></span>
                             <span>{{row.label}}</span>
                         </a>
                     </li>
@@ -56,6 +56,9 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
              `.with-border > .dropdown-item {
                 margin-bottom: 4px; }`,
 
+             `.with-border {
+               margin-bottom: 4px; }`,
+
              `.row-color {
                 width: 15px;
                 height: 15px;
@@ -65,24 +68,24 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
                 margin-right: 5px;
                 border-radius: 3px; }`]
 })
-export class DropdownMultiselectComponent implements OnInit {
+export class DropdownMultiselectComponent implements OnInit, OnChanges {
 
   /**
    * Configuration object to show bespoke version of component.
-   * 
+   *
    * @type {IMultiselectConfig}
    */
   @Input('dropdown-config') opts: IMultiselectConfig;
   /**
    * Dropdown options to be rendered.
-   * 
+   *
    * @type {IDropdownItem[]}
    */
   @Input('dropdown-model') model: IDropdownItem[];
 
   /**
    * Hook for components to capture changes in selections.
-   * 
+   *
    * @type {EventEmitter<any>}
    */
   @Output() onChange: EventEmitter<any> = new EventEmitter();
@@ -90,14 +93,14 @@ export class DropdownMultiselectComponent implements OnInit {
   // -------------------------------------------------------------------------------------------------
   /**
    * Configuration object used by the template.
-   * 
+   *
    * @type {MultiselectConfig}
    */
   public config: MultiselectConfig;
 
   /**
    * Number of options selected.
-   * 
+   *
    * @type {number}
    */
   public selectedLength: number;
@@ -105,7 +108,7 @@ export class DropdownMultiselectComponent implements OnInit {
   // -------------------------------------------------------------------------------------------------
   /**
    * Creates an instance of DropdownMultiselectComponent.
-   * 
+   *
    */
   constructor() {
     this.config = new MultiselectConfig();
@@ -128,6 +131,12 @@ export class DropdownMultiselectComponent implements OnInit {
 
     this._getSelectedLength();
 
+  }
+
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    console.groupCollapsed('Changes to dropdown-multiselect:');
+    console.log(changes);
+    console.groupEnd();
   }
 
   // -------------------------------------------------------------------------------------------------
@@ -158,7 +167,7 @@ export class DropdownMultiselectComponent implements OnInit {
   // -------------------------------------------------------------------------------------------------
   /**
    * Determine the selected number of options.
-   * 
+   *
    * @private
    */
   private _getSelectedLength = () => {
@@ -181,7 +190,7 @@ export class DropdownMultiselectComponent implements OnInit {
 
   /**
    * Determine how the dropdown should be configured.
-   * 
+   *
    * @private
    */
   private _processOptions = () => {
@@ -232,7 +241,7 @@ export class DropdownMultiselectComponent implements OnInit {
    * Update all options in the model to either:
    * - selected (provide val = true)
    * - deselected (provide val = false)
-   * 
+   *
    * @private
    */
   private _setSelectedTo = (val: boolean) => {
@@ -247,7 +256,7 @@ export class DropdownMultiselectComponent implements OnInit {
 
   /**
    * emit onchange event with the model options that are selected.
-   * 
+   *
    * @private
    */
   private _onChange = () => {

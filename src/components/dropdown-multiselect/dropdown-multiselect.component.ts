@@ -120,23 +120,23 @@ export class DropdownMultiselectComponent implements OnInit, OnChanges {
    * Angular lifecycle hook, executed after constructor
    */
   ngOnInit() {
+    console.info('ng2-dropdown-multiselect: ngOnInit');
+    console.log(this.model);
+
+    for (let i = 0; i < this.model.length; i++) {
+      if (this.model[i].selected == null) {
+        this.model[i].selected = false;
+      }
+    };
 
     this._processOptions();
-
-    this.model.forEach((row) => {
-      if(row.selected == null) {
-        row.selected = false;
-      }
-    });
 
     this._getSelectedLength();
 
   }
 
   ngOnChanges(changes: any) {
-    console.groupCollapsed('Changes to dropdown-multiselect:');
-    console.log(changes);
-    console.groupEnd();
+    console.info('ng2-dropdown-multiselect: ngOnChanges');
 
     let currentModel = changes.model.currentValue;
     let previousModel = changes.model.previousValue;
@@ -252,9 +252,10 @@ export class DropdownMultiselectComponent implements OnInit, OnChanges {
    * @private
    */
   private _setSelectedTo = (val: boolean) => {
-    this.model.forEach((row) => {
-      row.selected = val;
-    });
+
+    for (let i = 0; i < this.model.length; i++) {
+      this.model[i].selected = val;
+    };
 
     this._getSelectedLength();
 

@@ -133,10 +133,17 @@ export class DropdownMultiselectComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+  ngOnChanges(changes: any) {
     console.groupCollapsed('Changes to dropdown-multiselect:');
     console.log(changes);
     console.groupEnd();
+
+    let currentModel = changes.model.currentValue;
+    let previousModel = changes.model.previousValue;
+
+    if (currentModel.length != previousModel.length) {
+      this.ngOnInit();
+    }
   }
 
   // -------------------------------------------------------------------------------------------------

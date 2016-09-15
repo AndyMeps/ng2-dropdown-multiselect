@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AndyMeps/ng2-dropdown-multiselect.svg?branch=master)](https://travis-ci.org/AndyMeps/ng2-dropdown-multiselect)
+
 # ng2-dropdown-multiselect
 
 Simple multiselect dropdown plugin for Angular 2.
@@ -36,11 +38,11 @@ Finally, include the component in your component HTML as per the next section.
 
 ## HTML Component Markup
 
-Once the module is installed, you will need to add HTML markup to include the dropdown in a component. 
+Once the module is installed, you will need to add HTML markup to include the dropdown in a component.
 The minimum requirement is a [dropdown-model] attribute inside the element:
 
 ```html5
-<dropdown-multiselect 
+<dropdown-multiselect
     [dropdown-model]="">
 </dropdown-multiselect>
 ```
@@ -80,17 +82,17 @@ ngOnInit() {
 You can then reference the component's model property in the `[dropdown-model]` attribute:
 
 ```html5
-<dropdown-multiselect 
+<dropdown-multiselect
     [dropdown-model]="dropdownModel">
 </dropdown-multiselect>
 ```
 
-It is possible to configure `ng2-dropdown-multiselect` by providing a configuration object to 
+It is possible to configure `ng2-dropdown-multiselect` by providing a configuration object to
 the `[dropdown-options]` attribute (see the next section for more details on this object):
 
 ```html5
-<dropdown-multiselect 
-    [dropdown-model]="dropdownModel" 
+<dropdown-multiselect
+    [dropdown-model]="dropdownModel"
     [dropdown-options]="dropdownOptions">
 </dropdown-multiselect>
 ```
@@ -98,12 +100,12 @@ the `[dropdown-options]` attribute (see the next section for more details on thi
 
 ## Configuration
 
-`ng2-dropdown-multiselect` exposes an interface to provide an indication of valid configuration properties, 
+`ng2-dropdown-multiselect` exposes an interface to provide an indication of valid configuration properties,
 this can be references as a type for your configuration object by importing it:
 
 ```typescript
 import { IMultiselectOptions } from 'ng2-dropdown-multiselect';
-``` 
+```
 
 Which can then be used as the configuration object type in your component:
 

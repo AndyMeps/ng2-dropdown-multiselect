@@ -15,20 +15,50 @@ export class AppComponent {
   constructor() {
 
     this.model = [
-      /*{
+      {
         id: 1,
-        label: 'Item One'
+        label: 'Charmander'
       },
       {
         id: 2,
-        label: 'Item Two'
+        label: 'Charmeleon'
+      },
+      {
+        id: 3,
+        label: 'Charizard'
+      },
+      {
+        id: 4,
+        label: 'Bulbasaur'
+      },
+      {
+        id: 5,
+        label: 'Ivysaur'
+      }/*,
+      {
+        id: 6,
+        label: 'Venusaur'
+      },
+      {
+        id: 7,
+        label: 'Squirtle'
+      },
+      {
+        id: 8,
+        label: 'Wartortle'
+      },
+      {
+        id: 9,
+        label: 'Blastoise'
       }*/
     ];
 
     this.options = {
       allSelected: true,
       showCheckAll: true,
-      showUncheckAll: true
+      showUncheckAll: true,
+      checkClasses: ['fa', 'fa-fw', 'fa-check'],
+      uncheckClasses: ['fa', 'fa-fw', 'fa-times']
     };
 
   }

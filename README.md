@@ -6,6 +6,8 @@
 
 Simple multiselect dropdown plugin for Angular 2.
 
+[Screenshot open with FontAwesome](https://raw.githubusercontent.com/AndyMeps/ng2-dropdown-multiselect/master/assets/screenshot-open-with-fa.png)
+
 # This module is still a WIP and this documentation may be ahead of or behind the codebase.
 
 ## Dependencies

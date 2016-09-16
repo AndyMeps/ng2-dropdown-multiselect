@@ -34,7 +34,7 @@ export class AppComponent {
       {
         id: 5,
         label: 'Ivysaur'
-      }/*,
+      },
       {
         id: 6,
         label: 'Venusaur'
@@ -50,7 +50,7 @@ export class AppComponent {
       {
         id: 9,
         label: 'Blastoise'
-      }*/
+      }
     ];
 
     this.options = {
@@ -58,7 +58,8 @@ export class AppComponent {
       showCheckAll: true,
       showUncheckAll: true,
       checkClasses: ['fa', 'fa-fw', 'fa-check'],
-      uncheckClasses: ['fa', 'fa-fw', 'fa-times']
+      uncheckClasses: ['fa', 'fa-fw', 'fa-times'],
+      scrollingHeight: 200
     };
 
   }

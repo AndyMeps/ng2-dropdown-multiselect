@@ -21,7 +21,7 @@ import { MultiselectConfig } from '../models';
                     <span>{{buttonLabel}}</span> ({{selectedLength}})
                     <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul dropdownMenu class="dropdown-menu scrollable-menu" [style.max-height]="config.scrollingHeight + 'px'">
                     <li *ngIf="config.showCheckAll" [ngClass]="{'with-border': !config.showUncheckAll }" class="top-section">
                         <a class="dropdown-item" (click)="checkAll()">
                             <i *ngIf="config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
@@ -65,7 +65,12 @@ import { MultiselectConfig } from '../models';
                 position: relative;
                 top: 3px;
                 margin-right: 5px;
-                border-radius: 3px; }`]
+                border-radius: 3px; }`,
+
+              `.scrollable-menu {
+                height: auto;
+                overflow-x: hidden;
+              }`]
 })
 export class DropdownMultiselectComponent implements ControlValueAccessor, OnInit {
 
@@ -224,6 +229,11 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     // uncheckClasses
     if (this.opts.uncheckClasses) {
       this.config.uncheckClasses = this.opts.uncheckClasses;
+    }
+
+    // scrollingHeight
+    if (this.opts.scrollingHeight) {
+      this.config.scrollingHeight = this.opts.scrollingHeight;
     }
   }
 

@@ -1,47 +1,48 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChange, Self } from '@angular/core';
+import { NgModel, ControlValueAccessor } from '@angular/forms';
 
-import { IDropdownItem } from '../../interfaces/dropdown-item.interface';
-import { IMultiselectConfig } from '../../interfaces/multiselect-config.interface';
-
-import { MultiselectConfig } from '../../models/multiselect-config.model';
+import { IDropdownItem, IMultiselectConfig } from '../interfaces';
+import { MultiselectConfig } from '../models';
 
 /**
  * Dropdown Multiselect component to be used by components.
- * 
+ *
  * Input: dropdown-config - configuration.
  * Input: dropdown-model - dropdown options model.
- * 
+ *
  * @export
  * @class DropdownMultiselectComponent
- * @implements {OnInit}
+ * @implements {ControlValueAccessor, OnInit}
  */
 @Component({
-    selector: 'dropdown-multiselect',
+    selector: 'dropdown-multiselect[ngModel]',
     template: `<div class="multiselect-container" dropdown autoClose="outsideClick">
                 <button [ngClass]="config.buttonClasses" dropdownToggle>
-                    <span>{{config.buttonLabel}}</span> ({{selectedLength}})
+                    <span>{{buttonLabel}}</span> ({{selectedLength}})
                     <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul dropdownMenu class="dropdown-menu scrollable-menu" [style.max-height]="config.scrollingHeight + 'px'">
                     <li *ngIf="config.showCheckAll" [ngClass]="{'with-border': !config.showUncheckAll }" class="top-section">
-                        <a class="dropdown-item" (click)="checkAll()">
+                        <a class="dropdown-item dropdown-multiselect-clickable" (click)="checkAll()">
                             <i *ngIf="config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
                             <input *ngIf="config.checkClasses.length === 0" type="checkbox" name="check-all" checked="checked" readonly />
                             <span> Check All</span>
                         </a>
                     </li>
                     <li *ngIf="config.showUncheckAll" class="top-section with-border">
-                        <a (click)="uncheckAll()" class="dropdown-item">
+                        <a (click)="uncheckAll()" class="dropdown-item dropdown-multiselect-clickable">
                             <i *ngIf="config.uncheckClasses.length > 0" [ngClass]="config.uncheckClasses"></i>
                             <input *ngIf="config.uncheckClasses.length === 0" type="checkbox" name="uncheck-all" readonly />
                             <span> Uncheck All</span>
                         </a>
                     </li>
-                    <li *ngFor="let row of model" role="menuitem">
-                        <a class="dropdown-item" (click)="toggleRow(row)">
-                            <i *ngIf="row.selected && config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
-                            <input *ngIf="config.checkClasses.length === 0" [name]="row.id + '-checkbox'" [(ngModel)]="row.selected" type="checkbox" />
-                            <span *ngIf="row.color" [style.background-color]="row.color" class="row-color"></span> 
+                    <li *ngFor="let row of cd.viewModel" role="menuitem">
+                        <a class="dropdown-item dropdown-multiselect-clickable" (click)="toggleRow(row)">
+                            <span class="check-area">
+                              <i *ngIf="row.selected && config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
+                              <input *ngIf="config.checkClasses.length === 0" [name]="row.id + '-checkbox'" [(ngModel)]="row.selected" type="checkbox" />
+                            </span>
+                            <span *ngIf="row.color" [style.background-color]="row.color" class="row-color"></span>
                             <span>{{row.label}}</span>
                         </a>
                     </li>
@@ -56,6 +57,9 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
              `.with-border > .dropdown-item {
                 margin-bottom: 4px; }`,
 
+             `.with-border {
+               margin-bottom: 4px; }`,
+
              `.row-color {
                 width: 15px;
                 height: 15px;
@@ -63,53 +67,54 @@ import { MultiselectConfig } from '../../models/multiselect-config.model';
                 position: relative;
                 top: 3px;
                 margin-right: 5px;
-                border-radius: 3px; }`]
+                border-radius: 3px; }`,
+
+             `.scrollable-menu {
+                height: auto;
+                overflow-x: hidden; }`,
+
+             `.check-area {
+                width: 18px;
+                display: inline-block; }`,
+
+             `.dropdown-multiselect-clickable {
+               cursor: pointer; }`]
 })
-export class DropdownMultiselectComponent implements OnInit {
+export class DropdownMultiselectComponent implements ControlValueAccessor, OnInit {
 
   /**
    * Configuration object to show bespoke version of component.
-   * 
+   *
    * @type {IMultiselectConfig}
    */
   @Input('dropdown-config') opts: IMultiselectConfig;
-  /**
-   * Dropdown options to be rendered.
-   * 
-   * @type {IDropdownItem[]}
-   */
-  @Input('dropdown-model') model: IDropdownItem[];
 
-  /**
-   * Hook for components to capture changes in selections.
-   * 
-   * @type {EventEmitter<any>}
-   */
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
+  public cd: NgModel;
+
+  public onChange: any = Function.prototype;
+  public onTouched: any = Function.prototype;
+
+  private dropdownItems: IDropdownItem[];
 
   // -------------------------------------------------------------------------------------------------
   /**
    * Configuration object used by the template.
-   * 
+   *
    * @type {MultiselectConfig}
    */
   public config: MultiselectConfig;
 
-  /**
-   * Number of options selected.
-   * 
-   * @type {number}
-   */
-  public selectedLength: number;
-
   // -------------------------------------------------------------------------------------------------
   /**
    * Creates an instance of DropdownMultiselectComponent.
-   * 
+   *
    */
-  constructor() {
+  constructor(@Self() cd: NgModel) {
+    this.cd = cd;
+    cd.valueAccessor = this;
+
+    this.cd.viewModel = [];
     this.config = new MultiselectConfig();
-    this.selectedLength = 0;
   }
 
   // -------------------------------------------------------------------------------------------------
@@ -118,16 +123,36 @@ export class DropdownMultiselectComponent implements OnInit {
    */
   ngOnInit() {
 
+    for (let i = 0; i < this.cd.viewModel.length; i++) {
+      if (this.cd.viewModel[i].selected == null) {
+        this.cd.viewModel[i].selected = false;
+      }
+    };
+
     this._processOptions();
 
-    this.model.forEach((row) => {
-      if(row.selected == null) {
-        row.selected = false;
-      }
-    });
+  }
 
-    this._getSelectedLength();
+  get selectedLength(): number {
+    return this.cd.viewModel.filter((o: IDropdownItem) => { return o.selected; }).length;
+  }
 
+  get buttonLabel(): string {
+    let len = this.selectedLength;
+
+    if (len <= this.config.maxInline && len > 0) {
+      let value: string = '';
+
+      this.cd.viewModel.forEach((row) => {
+        if (row.selected) {
+          value += row.label + ', ';
+        }
+      });
+
+      return value.slice(0, value.length - 2); // Remove trailing ', '
+    } else {
+      return this.config.buttonLabel;
+    }
   }
 
   // -------------------------------------------------------------------------------------------------
@@ -136,9 +161,6 @@ export class DropdownMultiselectComponent implements OnInit {
    */
   public toggleRow = (row: IDropdownItem) => {
     row.selected = !row.selected;
-
-    this._getSelectedLength();
-    this._onChange();
   }
 
   /**
@@ -155,33 +177,23 @@ export class DropdownMultiselectComponent implements OnInit {
     this._setSelectedTo(true);
   }
 
-  // -------------------------------------------------------------------------------------------------
-  /**
-   * Determine the selected number of options.
-   * 
-   * @private
-   */
-  private _getSelectedLength = () => {
-    this.selectedLength = this.model.filter((row) => { return row.selected }).length;
+  public writeValue(value: any) {
 
-    if (this.selectedLength <= this.config.maxInline && this.selectedLength > 0) {
-      let value: string = '';
-
-      this.model.forEach((row) => {
-        if (row.selected) {
-          value += row.label + ', ';
-        }
-      });
-
-      this.config.buttonLabel = value.slice(0, value.length - 2); // Remove trailing ', '
-    } else {
-      this.config.buttonLabel = this.opts.defaultButtonText;
-    }
   }
+
+  public registerOnChange(fn: (_: any) => {}): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: (_: any) => {}): void {
+    this.onTouched = fn;
+  }
+
+  // -------------------------------------------------------------------------------------------------
 
   /**
    * Determine how the dropdown should be configured.
-   * 
+   *
    * @private
    */
   private _processOptions = () => {
@@ -226,32 +238,26 @@ export class DropdownMultiselectComponent implements OnInit {
     if (this.opts.uncheckClasses) {
       this.config.uncheckClasses = this.opts.uncheckClasses;
     }
+
+    // scrollingHeight
+    if (this.opts.scrollingHeight) {
+      this.config.scrollingHeight = this.opts.scrollingHeight;
+    }
   }
 
   /**
    * Update all options in the model to either:
    * - selected (provide val = true)
    * - deselected (provide val = false)
-   * 
+   *
    * @private
    */
   private _setSelectedTo = (val: boolean) => {
-    this.model.forEach((row) => {
-      row.selected = val;
-    });
 
-    this._getSelectedLength();
+    for (let i = 0; i < this.cd.viewModel.length; i++) {
+      this.cd.viewModel[i].selected = val;
+    };
 
-    this._onChange();
-  }
-
-  /**
-   * emit onchange event with the model options that are selected.
-   * 
-   * @private
-   */
-  private _onChange = () => {
-    this.onChange.emit(this.model.filter((row) => { return row.selected }));
   }
 
 }

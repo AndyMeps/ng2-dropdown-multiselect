@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "outDir": "demo/node_modules/ng2-dropdown-multiselect",
+        "declaration": true,
+        "removeComments": true
+    },
+    "files": [
+        "index.ts"
+    ],
+    "exclude": [
+        "demo",
+        "node_modules"
+    ]
+}

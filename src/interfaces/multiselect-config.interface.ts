@@ -54,7 +54,9 @@ export interface IMultiselectConfig {
    */
   uncheckClasses?: string[];
   /**
-   *
+   * Height at which the dropdown will start to scroll
+   * 
+   * @type {number}
    */
   scrollingHeight?: number;
 }

@@ -4,18 +4,14 @@
 
 # ng2-dropdown-multiselect
 
-![travis-ci](https://travis-ci.org/AndyMeps/ng2-dropdown-multiselect.svg?branch=master)
-
 Simple multiselect dropdown plugin for Angular 2.
 
 ![Screenshot open with FontAwesome](https://raw.githubusercontent.com/AndyMeps/ng2-dropdown-multiselect/master/assets/screenshot-open-with-fa.png)
 
-# This module is still a WIP and this documentation may be ahead of or behind the codebase.
-
 ## Dependencies
 
 The module relies on `ng2-bootstrap` for dropdown functionality.
-Icon fonts can be interchanged, by default `ng2-dropdown-multiselect` uses default checkboxes.
+Icon fonts can be interchanged, by default `ng2-dropdown-multiselect` uses input[type="checkbox"].
 
 ## Installation
 
@@ -45,15 +41,15 @@ Finally, include the component in your component HTML as per the next section.
 ## HTML Component Markup
 
 Once the module is installed, you will need to add HTML markup to include the dropdown in a component.
-The minimum requirement is a [dropdown-model] attribute inside the element:
+The minimum requirement is an [(ngModel)] attribute
 
-```html5
+```html
 <dropdown-multiselect
-    [dropdown-model]="">
+    [(ngModel)]="dropdownModel">
 </dropdown-multiselect>
 ```
 
-The `[dropdown-model]` attribute expects an array of objects to represent the dropdown options, this array should include the following properties:
+The `[(ngModel)]` attribute expects an array of objects to represent the dropdown options, this array should include the following properties:
 
 | Property | Type | Required | Description |
 | -------- | ---- | -------- | ----------- |
@@ -85,21 +81,21 @@ ngOnInit() {
 }
 ```
 
-You can then reference the component's model property in the `[dropdown-model]` attribute:
+You can then reference the component's model property in the `[(ngModel)]` attribute:
 
-```html5
+```html
 <dropdown-multiselect
-    [dropdown-model]="dropdownModel">
+    [(ngModel)]="dropdownModel">
 </dropdown-multiselect>
 ```
 
 It is possible to configure `ng2-dropdown-multiselect` by providing a configuration object to
-the `[dropdown-options]` attribute (see the next section for more details on this object):
+the `[dropdown-config]` attribute (see the next section for more details on this object):
 
-```html5
+```html
 <dropdown-multiselect
-    [dropdown-model]="dropdownModel"
-    [dropdown-options]="dropdownOptions">
+    [(ngModel)]="dropdownModel"
+    [dropdown-config]="dropdownOptions">
 </dropdown-multiselect>
 ```
 
@@ -110,13 +106,13 @@ the `[dropdown-options]` attribute (see the next section for more details on thi
 this can be references as a type for your configuration object by importing it:
 
 ```typescript
-import { IMultiselectOptions } from 'ng2-dropdown-multiselect';
+import { IMultiselectConfig } from 'ng2-dropdown-multiselect';
 ```
 
 Which can then be used as the configuration object type in your component:
 
 ```typescript
-public dropdownConfiguration: IMultiselectOptions;
+public dropdownConfiguration: IMultiselectConfig;
 ```
 
 Current list of configuration options, types and default values
@@ -129,3 +125,6 @@ Current list of configuration options, types and default values
 | showCheckAll | `boolean` | false | Display a 'Check All' option at the top of the dropdown. |
 | showUncheckAll | `boolean` | false | Display a 'Uncheck All' option at the top of the dropdown. |
 | buttonClasses | `string[]` | ['btn', 'btn-default'] | Array of classes added to the control button. |
+| checkClasses | `string[]` | [ ] | Array of classes added to the <i> of checked options and "Check All" - will hide input[type="checkbox"]. |
+| uncheckClasses | `string[]` | [ ] | Array of classes added to the <i> of "Uncheck All". |
+| scrollingHeight | `number` | 200 | Height at which the dropdown will start to scroll. |

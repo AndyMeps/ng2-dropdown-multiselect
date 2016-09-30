@@ -87,7 +87,7 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    *
    * @type {IMultiselectConfig}
    */
-  @Input('dropdown-config') opts: IMultiselectConfig;
+  @Input() dropdownConfig: IMultiselectConfig;
 
   public cd: NgModel;
 
@@ -197,51 +197,53 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    * @private
    */
   private _processOptions = () => {
+    let opts = this.dropdownConfig;
+
     // defaultButtonText
-    if (this.opts.defaultButtonText) {
-      this.config.buttonLabel = this.opts.defaultButtonText;
+    if (opts.defaultButtonText) {
+      this.config.buttonLabel = opts.defaultButtonText;
     }
 
     // allSelected
-    if (typeof(this.opts.allSelected) === 'boolean') {
-      this.config.allSelected = this.opts.allSelected;
+    if (typeof(opts.allSelected) === 'boolean') {
+      this.config.allSelected = opts.allSelected;
 
       this.checkAll();
     }
 
     // showCheckAll
-    if (typeof(this.opts.showCheckAll) === 'boolean') {
-      this.config.showCheckAll = this.opts.showCheckAll;
+    if (typeof(opts.showCheckAll) === 'boolean') {
+      this.config.showCheckAll = opts.showCheckAll;
     }
 
     // showUncheckAll
-    if (typeof(this.opts.showUncheckAll) === 'boolean') {
-      this.config.showUncheckAll = this.opts.showUncheckAll;
+    if (typeof(opts.showUncheckAll) === 'boolean') {
+      this.config.showUncheckAll = opts.showUncheckAll;
     }
 
     // maxInline
-    if (this.opts.maxInline) {
-      this.config.maxInline = this.opts.maxInline;
+    if (opts.maxInline) {
+      this.config.maxInline = opts.maxInline;
     }
 
     // buttonClasses
-    if (this.opts.buttonClasses) {
-      this.config.buttonClasses = this.opts.buttonClasses;
+    if (opts.buttonClasses) {
+      this.config.buttonClasses = opts.buttonClasses;
     }
 
     // checkClasses
-    if (this.opts.checkClasses) {
-      this.config.checkClasses = this.opts.checkClasses;
+    if (opts.checkClasses) {
+      this.config.checkClasses = opts.checkClasses;
     }
 
     // uncheckClasses
-    if (this.opts.uncheckClasses) {
-      this.config.uncheckClasses = this.opts.uncheckClasses;
+    if (opts.uncheckClasses) {
+      this.config.uncheckClasses = opts.uncheckClasses;
     }
 
     // scrollingHeight
-    if (this.opts.scrollingHeight) {
-      this.config.scrollingHeight = this.opts.scrollingHeight;
+    if (opts.scrollingHeight) {
+      this.config.scrollingHeight = opts.scrollingHeight;
     }
   }
 

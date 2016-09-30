@@ -90,12 +90,12 @@ You can then reference the component's model property in the `[(ngModel)]` attri
 ```
 
 It is possible to configure `ng2-dropdown-multiselect` by providing a configuration object to
-the `[dropdown-config]` attribute (see the next section for more details on this object):
+the `[dropdownConfig]` attribute (see the next section for more details on this object):
 
 ```html
 <dropdown-multiselect
     [(ngModel)]="dropdownModel"
-    [dropdown-config]="dropdownOptions">
+    [dropdownConfig]="dropdownOptions">
 </dropdown-multiselect>
 ```
 

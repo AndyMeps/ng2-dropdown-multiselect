@@ -8,7 +8,10 @@
     "postinstall": "typings install",
     "typings": "typings",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "lint:ts": "tslint \"src/**/*.ts\""
+    "lint:ts": "tslint \"src/**/*.ts\"",
+    "bump:patch": "npm version patch -m \"%s [skip ci]\"",
+    "bump:minor": "npm version minor -m \"%s [skip ci]\"",
+    "bump:major": "npm version major -m \"%s [skip ci]\""
   },
   "repository": {
     "url": "https://github.com/AndyMeps/ng2-dropdown-multiselect.git",

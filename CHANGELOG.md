@@ -1,5 +1,12 @@
+<a name="0.3.1"></a>
+# [0.3.1](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.3.0...v0.3.1) (2016-09-30)
+
+### Notes
+
+* Small change to add in `bump:patch`, `bump:minor` and `bump:major` npm commands.
+
 <a name="0.3.0"></a>
-## [0.3.0](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.2.2...v0.3.0) (2016-09-30)
+# [0.3.0](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.2.2...v0.3.0) (2016-09-30)
 
 ### Breaking Changes
 

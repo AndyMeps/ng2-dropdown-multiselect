@@ -1,3 +1,11 @@
+<a name="0.3.2"></a>
+# [0.3.2](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.3.1...v0.3.2) (2016-11-16)
+
+### Bug Fixes
+
+* Fixed [#5](https://github.com/AndyMeps/ng2-dropdown-multiselect/issues/5), `checkAll()` was firing
+when `allSelected` config property was present, not just when `allSelected == true`
+
 <a name="0.3.1"></a>
 # [0.3.1](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.3.0...v0.3.1) (2016-09-30)
 

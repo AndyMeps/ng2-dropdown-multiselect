@@ -208,7 +208,9 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     if (typeof(opts.allSelected) === 'boolean') {
       this.config.allSelected = opts.allSelected;
 
-      this.checkAll();
+      if (this.config.allSelected) {
+        this.checkAll();
+      }
     }
 
     // showCheckAll

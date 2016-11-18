@@ -91,8 +91,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
 
   public cd: NgModel;
 
-  public onChange: any = Function.prototype;
-  public onTouched: any = Function.prototype;
+  private onChange: any = Function.prototype;
+  private onTouched: any = Function.prototype;
 
   private dropdownItems: IDropdownItem[];
 
@@ -161,6 +161,7 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    */
   public toggleRow = (row: IDropdownItem) => {
     row.selected = !row.selected;
+    this.onChange(this.cd.viewModel);
   }
 
   /**
@@ -261,6 +262,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     for (let i = 0; i < this.cd.viewModel.length; i++) {
       this.cd.viewModel[i].selected = val;
     };
+
+    this.onChange(this.cd.viewModel);
 
   }
 

@@ -74,4 +74,8 @@ export class AppComponent {
       }
     )
   }
+
+  public log(event) {
+    console.log(event);
+  }
 }

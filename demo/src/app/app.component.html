@@ -1,4 +1,4 @@
-<div style="padding: 2rem"><dropdown-multiselect [ngModel]="model" (ngModelChange)="log($event)" [dropdownConfig]="options"></dropdown-multiselect>
+<div style="padding: 2rem"><dropdown-multiselect [(ngModel)]="model" (ngModelChange)="log($event)" [dropdownConfig]="options"></dropdown-multiselect>
 </div>
 
 <button (click)="pushNew()">Add New</button>

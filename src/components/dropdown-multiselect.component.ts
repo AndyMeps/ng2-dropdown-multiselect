@@ -91,12 +91,13 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
 
   public cd: NgModel;
 
-  private onChange: any = Function.prototype;
-  private onTouched: any = Function.prototype;
+  public onChange: any = Function.prototype;
+  public onTouched: any = Function.prototype;
 
   private dropdownItems: IDropdownItem[];
 
   // -------------------------------------------------------------------------------------------------
+
   /**
    * Configuration object used by the template.
    *
@@ -105,10 +106,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
   public config: MultiselectConfig;
 
   // -------------------------------------------------------------------------------------------------
-  /**
-   * Creates an instance of DropdownMultiselectComponent.
-   *
-   */
+
+  /** Creates an instance of DropdownMultiselectComponent. */
   constructor(@Self() cd: NgModel) {
     this.cd = cd;
     cd.valueAccessor = this;
@@ -118,76 +117,85 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
   }
 
   // -------------------------------------------------------------------------------------------------
-  /**
-   * Angular lifecycle hook, executed after constructor
-   */
+
+  /** OnInit implementation */
   ngOnInit() {
-
-    for (let i = 0; i < this.cd.viewModel.length; i++) {
-      if (this.cd.viewModel[i].selected == null) {
-        this.cd.viewModel[i].selected = false;
-      }
-    };
-
-    this._processOptions();
-
+    this.setSelectedTo(false);
+    this.processOptions(this.dropdownConfig);
   }
 
-  get selectedLength(): number {
-    return this.cd.viewModel.filter((o: IDropdownItem) => { return o.selected; }).length;
+  /** ControlValueAccessor implementation */
+  writeValue(value: any) { }
+
+  /** ControlValueAccessor implementation */
+  registerOnChange(fn: (_: any) => {}): void {
+    this.onChange = fn;
   }
 
-  get buttonLabel(): string {
-    let len = this.selectedLength;
-
-    if (len <= this.config.maxInline && len > 0) {
-      let value: string = '';
-
-      this.cd.viewModel.forEach((row) => {
-        if (row.selected) {
-          value += row.label + ', ';
-        }
-      });
-
-      return value.slice(0, value.length - 2); // Remove trailing ', '
-    } else {
-      return this.config.buttonLabel;
-    }
+  /** ControlValueAccessor implementation */
+  registerOnTouched(fn: (_: any) => {}): void {
+    this.onTouched = fn;
   }
 
   // -------------------------------------------------------------------------------------------------
+
+  /**
+   * Returns the count of selected dropdown items.
+   *
+   * @readonly
+   * @type {number}
+   * @memberOf DropdownMultiselectComponent
+   */
+  get selectedLength(): number {
+    return this.cd.viewModel.filter(({selected}) => selected).length;
+  }
+
+  /**
+   * Returns the appropriate string to display on the dropdown button.
+   *
+   * @readonly
+   * @type {string}
+   * @memberOf DropdownMultiselectComponent
+   */
+  get buttonLabel(): string {
+    const count = this.selectedLength;
+    const model = this.cd.viewModel;
+    const { maxInline, buttonLabel } = this.config;
+
+    if (count > maxInline || count === 0) { return buttonLabel; }
+
+    const label = model.reduce((prev, {selected, label}) => {
+      if (!selected) return prev;
+      return `${prev}${label}, `;
+    }, '');
+
+    return label.slice(0, label.length - 2); // Remove trailing ', '
+  }
+
+  // -------------------------------------------------------------------------------------------------
+
   /**
    * Select / deselect dropdown option.
    */
-  public toggleRow = (row: IDropdownItem) => {
-    row.selected = !row.selected;
+  public toggleRow(item: IDropdownItem) {
+    item.selected = !item.selected;
     this.onChange(this.cd.viewModel);
   }
 
   /**
    * Deselect all dropdown options.
    */
-  public uncheckAll = () => {
-    this._setSelectedTo(false);
+  public uncheckAll() {
+    this.setSelectedTo(false);
+    this.onChange(this.cd.viewModel);
   }
 
   /**
    * Select all dropdown options.
    */
-  public checkAll = () => {
-    this._setSelectedTo(true);
-  }
-
-  public writeValue(value: any) {
-
-  }
-
-  public registerOnChange(fn: (_: any) => {}): void {
-    this.onChange = fn;
-  }
-
-  public registerOnTouched(fn: (_: any) => {}): void {
-    this.onTouched = fn;
+  public checkAll() {
+    this.setSelectedTo(true);
+    this.onChange(this.cd.viewModel);
   }
 
   // -------------------------------------------------------------------------------------------------
@@ -197,11 +205,10 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    *
    * @private
    */
-  private _processOptions = () => {
-    let opts = this.dropdownConfig;
+  private processOptions(opts: IMultiselectConfig) {
 
     // defaultButtonText
-    if (opts.defaultButtonText) {
+    if (typeof(opts.defaultButtonText) === 'string') {
       this.config.buttonLabel = opts.defaultButtonText;
     }
 
@@ -225,46 +232,44 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     }
 
     // maxInline
-    if (opts.maxInline) {
+    if (typeof(opts.maxInline) === 'number') {
       this.config.maxInline = opts.maxInline;
     }
 
     // buttonClasses
-    if (opts.buttonClasses) {
+    if (Array.isArray(opts.buttonClasses)) {
       this.config.buttonClasses = opts.buttonClasses;
     }
 
     // checkClasses
-    if (opts.checkClasses) {
+    if (Array.isArray(opts.checkClasses)) {
       this.config.checkClasses = opts.checkClasses;
     }
 
     // uncheckClasses
-    if (opts.uncheckClasses) {
+    if (Array.isArray(opts.uncheckClasses)) {
       this.config.uncheckClasses = opts.uncheckClasses;
     }
 
     // scrollingHeight
-    if (opts.scrollingHeight) {
+    if (typeof(opts.scrollingHeight) === 'number') {
       this.config.scrollingHeight = opts.scrollingHeight;
     }
   }
 
   /**
    * Update all options in the model to either:
-   * - selected (provide val = true)
-   * - deselected (provide val = false)
+   * - selected `val = true`
+   * - deselected `val = false`
    *
    * @private
    */
-  private _setSelectedTo = (val: boolean) => {
+  private setSelectedTo(val: boolean) {
+    const newModel = this.cd.viewModel.map((item) => {
+      return Object.assign({}, item, { selected: val });
+    });
 
-    for (let i = 0; i < this.cd.viewModel.length; i++) {
-      this.cd.viewModel[i].selected = val;
-    };
-
-    this.onChange(this.cd.viewModel);
-
+    this.cd.viewToModelUpdate(newModel);
   }
 
 }

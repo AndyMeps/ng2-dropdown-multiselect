@@ -1,9 +1,16 @@
+<a name="WIP"></a>
+# [WIP]() (???)
+
+### Notes
+
+* Refactored the dropdown component to make use of more syntactic sugar to help tidy up the code.
+
 <a name="0.3.3"></a>
 # [0.3.3](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.3.2...v0.3.3) (2016-11-18)
 
 ### Bug Fixes
 
-* Fixed [#6](https://github.com/AndyMeps/ng2-dropdown-multiselect/issues/6), added implementation for 
+* Fixed [#6](https://github.com/AndyMeps/ng2-dropdown-multiselect/issues/6), added implementation for
 `ngModelChange`, missing calls from the component.
 
 <a name="0.3.2"></a>

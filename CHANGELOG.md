@@ -1,9 +1,10 @@
-<a name="WIP"></a>
-# [WIP]() (???)
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/andymeps/ng2-label-multiselect/compare/v0.1.9...v1.0.0)
 
 ### Notes
 
 * Refactored the dropdown component to make use of more syntactic sugar to help tidy up the code.
+* Bumped to `1.0.0` as this library is now being used in production environments.
 
 <a name="0.3.3"></a>
 # [0.3.3](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.3.2...v0.3.3) (2016-11-18)

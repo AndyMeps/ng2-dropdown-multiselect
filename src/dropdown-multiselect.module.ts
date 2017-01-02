@@ -12,7 +12,7 @@ import { DropdownMultiselectComponent } from './components';
  * @class DropdownMultiselectModule
  */
 @NgModule({
-    imports: [ CommonModule, FormsModule, DropdownModule ],
+    imports: [ CommonModule, FormsModule, DropdownModule.forRoot() ],
     declarations: [ DropdownMultiselectComponent ],
     exports: [ DropdownMultiselectComponent ]
 })

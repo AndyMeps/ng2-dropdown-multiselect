@@ -1,5 +1,19 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v1.0.0...v1.1.0) (2017-01-02)
+
+### Bug Fixes
+
+* Fix for #8 - migrated to latest version of angular 2 and ng2-bootstrap to resolve issue with bad version of ng2-bootstrap.
+
+### Notes
+
+* Migrated library to the latest version of angular 2 and ng2-bootstrap
+
+### Notes
+
+
 <a name="1.0.0"></a>
-# [1.0.0](https://github.com/andymeps/ng2-label-multiselect/compare/v0.1.9...v1.0.0) (2016-12-02)
+# [1.0.0](https://github.com/andymeps/ng2-dropdown-multiselect/compare/v0.1.9...v1.0.0) (2016-12-02)
 
 ### Notes
 

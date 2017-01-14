@@ -1,2 +1,2 @@
-export * from './dropdown-item.interface';
-export * from './multiselect-config.interface';
+export { IDropdownItem } from './dropdown-item.interface';
+export { IMultiselectConfig } from './multiselect-config.interface';

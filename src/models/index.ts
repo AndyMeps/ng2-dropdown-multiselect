@@ -1,1 +1,1 @@
-export * from './multiselect-config.model';
+export { MultiselectConfig } from './multiselect-config.model';

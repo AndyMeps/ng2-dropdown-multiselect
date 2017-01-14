@@ -1,1 +1,1 @@
-export * from './dropdown-multiselect.component';
+export { DropdownMultiselectComponent } from './dropdown-multiselect.component';

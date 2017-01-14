@@ -78,7 +78,8 @@ import { MultiselectConfig } from '../models';
                 display: inline-block; }`,
 
              `.dropdown-multiselect-clickable {
-               cursor: pointer; }`]
+               cursor: pointer; }`],
+    providers: [ NgModel ]
 })
 export class DropdownMultiselectComponent implements ControlValueAccessor, OnInit {
 

@@ -218,6 +218,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    */
   private processOptions(opts: IMultiselectConfig) {
 
+    if (opts == null) return;
+
     const IsBoolean = (val: any) => typeof(val) === 'boolean';
     const IsString = (val: any) => typeof(val) === 'string';
     const IsNumber = (val: any) => typeof(val) === 'number';

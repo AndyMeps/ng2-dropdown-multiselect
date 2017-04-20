@@ -2,9 +2,11 @@
   <dropdown-multiselect 
     [(ngModel)]="model" 
     [autoClose]="false"
-    [dropdownConfig]="options" 
+    
     (ngModelChange)="log($event)">
   </dropdown-multiselect>
 </div>
 
 <button (click)="pushNew()">Add New</button>
+
+<!-- [dropdownConfig]="options"  -->

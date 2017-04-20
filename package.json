@@ -1,6 +1,6 @@
 {
   "name": "ng2-dropdown-multiselect",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Simple multiselect dropdown plugin for Angular 2",
   "main": "dist/index.js",
   "scripts": {

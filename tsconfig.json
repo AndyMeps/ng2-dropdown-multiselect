@@ -1,21 +1,36 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "es2015",
         "target": "es5",
         "moduleResolution": "node",
         "noImplicitAny": false,
         "sourceMap": true,
-        "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "outDir": "lib",
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "baseUrl": "",
+        "lib": [
+            "es6",
+            "es2015",
+            "dom"
+        ],
         "declaration": true,
+        "outDir": "dist",
         "removeComments": true
     },
     "files": [
         "node_modules/typescript/lib/lib.es6.d.ts",
         "index.ts"
     ],
+    "exclude": [
+        "demo",
+        "node_modules",
+        "**/*.spec.ts",
+        ".vendor.ts",
+        ".polyfills.ts"
+    ],
     "angularCompilerOptions": {
-        "genDir": "compiled"
+        "skipTemplateCodegen": true,
+        "debug": true
     }
 }

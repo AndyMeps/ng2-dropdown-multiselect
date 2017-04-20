@@ -75,7 +75,7 @@ export class MultiselectConfig implements IMultiselectConfig {
     this.maxInline = 3;
     this.showCheckAll = false;
     this.showUncheckAll = false;
-    this.buttonClasses = ['btn', 'btn-default'];
+    this.buttonClasses = ['btn', 'btn-default', 'dropdown-toggle'];
     this.checkClasses = [];
     this.uncheckClasses = [];
     this.scrollingHeight = 200;

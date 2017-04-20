@@ -1,4 +1,4 @@
-export * from './src/components';
-export * from './src/models';
-export * from './src/interfaces';
+export { DropdownMultiselectComponent } from './src/components';
+export { MultiselectConfig } from './src/models';
+export { IMultiselectConfig, IDropdownItem } from './src/interfaces';
 export { DropdownMultiselectModule } from './src/dropdown-multiselect.module';

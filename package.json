@@ -2,15 +2,15 @@
   "name": "ng2-dropdown-multiselect",
   "version": "1.1.1",
   "description": "Simple multiselect dropdown plugin for Angular 2",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "prepublish": "ngc",
-    "typings": "typings",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "exit 0",
+    "prepublish": "ngc -p tsconfig.json",
     "lint:ts": "tslint \"src/**/*.ts\"",
     "bump:patch": "npm version patch -m \"%s [skip ci]\"",
     "bump:minor": "npm version minor -m \"%s [skip ci]\"",
-    "bump:major": "npm version major -m \"%s [skip ci]\""
+    "bump:major": "npm version major -m \"%s [skip ci]\"",
+    "bump:prerelease": "npm version prerelease -m \"%s [skip ci]\""
   },
   "repository": {
     "url": "https://github.com/AndyMeps/ng2-dropdown-multiselect.git",
@@ -27,24 +27,18 @@
   "author": "Andy Mepham",
   "license": "MIT",
   "dependencies": {
-    "@angular/common": "2.4.3",
-    "@angular/compiler": "2.4.3",
-    "@angular/core": "2.4.3",
-    "@angular/forms": "2.4.3",
-    "core-js": "^2.4.1",
-    "rxjs": "5.0.1",
-    "systemjs": "0.19.40",
-    "zone.js": "^0.7.4",
-    "ng2-bootstrap": "^1.1.16-11"
+    "@angular/common": "~4.0.0",
+    "@angular/compiler": "~4.0.0",
+    "@angular/core": "~4.0.0",
+    "@angular/forms": "~4.0.0",
+    "@angular/platform-browser": "~4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4",
+    "ngx-bootstrap": "~1.6.6"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "^2.4.0",
-    "@angular/platform-browser": "^2.4.0",
-    "@angular/platform-server": "^2.4.0",
-    "concurrently": "^2.2.0",
-    "lite-server": "^2.2.2",
-    "tslint": "^3.15.1",
-    "typescript": "~2.0.10",
-    "@types/node": "^6.0.46"
+    "@angular/compiler-cli": "~4.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "~2.2.0"
   }
 }

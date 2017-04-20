@@ -16,12 +16,17 @@ import { MultiselectConfig } from '../models';
  */
 @Component({
     selector: 'dropdown-multiselect[ngModel]',
-    template: `<div class="multiselect-container" dropdown autoClose="outsideClick">
+    template: `<div class="multiselect-container" 
+                  [autoClose]="autoClose" 
+                  dropdown>
                 <button [ngClass]="config.buttonClasses" dropdownToggle>
                     <span>{{buttonLabel}}</span> ({{selectedLength}})
                     <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu scrollable-menu" [style.max-height]="config.scrollingHeight + 'px'">
+                <ul class="dropdown-menu scrollable-menu" 
+                  role="menu" 
+                  [style.max-height]="config.scrollingHeight + 'px'" 
+                  *dropdownMenu>
                     <li *ngIf="config.showCheckAll" [ngClass]="{'with-border': !config.showUncheckAll }" class="top-section">
                         <a class="dropdown-item dropdown-multiselect-clickable" (click)="checkAll()">
                             <i *ngIf="config.checkClasses.length > 0" [ngClass]="config.checkClasses"></i>
@@ -49,7 +54,8 @@ import { MultiselectConfig } from '../models';
                 </ul>
             </div>`,
     styles: [`.multiselect-container {
-                display: inline-block; }`,
+                display: inline-block;
+                position: relative; }`,
 
              `.top-section.with-border {
                 border-bottom: 1px solid #ccc; }`,
@@ -90,6 +96,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    */
   @Input() dropdownConfig: IMultiselectConfig;
 
+  @Input() autoClose: boolean;
+
   public cd: NgModel;
 
   public onChange: any = Function.prototype;
@@ -115,6 +123,8 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
 
     this.cd.viewModel = [];
     this.config = new MultiselectConfig();
+
+    this.autoClose = false;
   }
 
   // -------------------------------------------------------------------------------------------------

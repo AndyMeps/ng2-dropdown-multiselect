@@ -10,7 +10,7 @@ Simple multiselect dropdown plugin for Angular 2.
 
 ## Dependencies
 
-The module relies on `ng2-bootstrap` for dropdown functionality.
+The module relies on `ngx-bootstrap` for dropdown functionality.
 Icon fonts can be interchanged, by default `ng2-dropdown-multiselect` uses input[type="checkbox"].
 
 ## Installation
@@ -128,3 +128,7 @@ Current list of configuration options, types and default values
 | checkClasses | `string[]` | [ ] | Array of classes added to the <i> of checked options and "Check All" - will hide input[type="checkbox"]. |
 | uncheckClasses | `string[]` | [ ] | Array of classes added to the <i> of "Uncheck All". |
 | scrollingHeight | `number` | 200 | Height at which the dropdown will start to scroll. |
+
+## Additional Attributes
+
+`ngx-bootstrap` has removed the option to close on outside click for the time being, therefore as a temporary measure I have added `[autoClose]` as an extra attribute on the dropdown, default to `false` which will then only close on button close. Hopefully the guys over at `ngx-bootstrap` will fix this sooner rather than later as this is less-than-ideal for a dropdown multiselect.

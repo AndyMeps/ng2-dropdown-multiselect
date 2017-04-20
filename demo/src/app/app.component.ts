@@ -45,16 +45,18 @@ export class AppComponent {
       },
       {
         id: 8,
-        label: 'Wartortle'
+        label: 'Wartortle',
+        selected: true
       },
       {
         id: 9,
-        label: 'Blastoise'
+        label: 'Blastoise',
+        selected: true
       }
     ];
 
     this.options = {
-      allSelected: true,
+      allSelected: false,
       showCheckAll: true,
       showUncheckAll: true,
       checkClasses: ['fa', 'fa-fw', 'fa-check'],

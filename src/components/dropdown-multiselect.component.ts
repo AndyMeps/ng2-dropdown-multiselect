@@ -131,7 +131,7 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
 
   /** OnInit implementation */
   ngOnInit() {
-    this.setSelectedTo(false);
+    this.setUndefinedSelectedToFalse();
     this.processOptions(this.dropdownConfig);
   }
 
@@ -218,13 +218,17 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
    */
   private processOptions(opts: IMultiselectConfig) {
 
+    const IsBoolean = (val: any) => typeof(val) === 'boolean';
+    const IsString = (val: any) => typeof(val) === 'string';
+    const IsNumber = (val: any) => typeof(val) === 'number';
+
     // defaultButtonText
-    if (typeof(opts.defaultButtonText) === 'string') {
+    if (IsString(opts.defaultButtonText)) {
       this.config.buttonLabel = opts.defaultButtonText;
     }
 
     // allSelected
-    if (typeof(opts.allSelected) === 'boolean') {
+    if (IsBoolean(opts.allSelected)) {
       this.config.allSelected = opts.allSelected;
 
       if (this.config.allSelected) {
@@ -233,17 +237,17 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     }
 
     // showCheckAll
-    if (typeof(opts.showCheckAll) === 'boolean') {
+    if (IsBoolean(opts.showCheckAll)) {
       this.config.showCheckAll = opts.showCheckAll;
     }
 
     // showUncheckAll
-    if (typeof(opts.showUncheckAll) === 'boolean') {
+    if (IsBoolean(opts.showUncheckAll)) {
       this.config.showUncheckAll = opts.showUncheckAll;
     }
 
     // maxInline
-    if (typeof(opts.maxInline) === 'number') {
+    if (IsNumber(opts.maxInline)) {
       this.config.maxInline = opts.maxInline;
     }
 
@@ -263,7 +267,7 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     }
 
     // scrollingHeight
-    if (typeof(opts.scrollingHeight) === 'number') {
+    if (IsNumber(opts.scrollingHeight)) {
       this.config.scrollingHeight = opts.scrollingHeight;
     }
   }
@@ -281,6 +285,17 @@ export class DropdownMultiselectComponent implements ControlValueAccessor, OnIni
     });
 
     this.cd.viewToModelUpdate(newModel);
+  }
+
+  /**
+   * Updates undefined selected props to false (fills in selected where not provided)
+   * 
+   * @private
+   */
+  private setUndefinedSelectedToFalse() {
+    const newModel = this.cd.viewModel.map((item: IDropdownItem) => {
+      return typeof(item.selected) === 'undefined' ? Object.assign({}, item, { selected: false }) : item;
+    });
   }
 
 }

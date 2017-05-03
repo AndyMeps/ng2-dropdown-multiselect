@@ -15,7 +15,7 @@
             "dom"
         ],
         "declaration": true,
-        "outDir": "dist",
+        "outDir": "./",
         "removeComments": true
     },
     "files": [
